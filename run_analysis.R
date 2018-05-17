@@ -65,7 +65,7 @@ str(allData,  list.len=ncol(allData))
 colnames(allData)[1:561] <- make.names(featureNameTable[[2]], unique=TRUE)
 names(allData)
 
-
+ 
 ## Select activtyLabel, mean, and standard deviation columns only
 # train Data
 tinyAllData <- select(allData, activityLabel, grep(".*mean.*|.*std.*", colnames(allData)))

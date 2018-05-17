@@ -8,7 +8,7 @@ Data merging and cleaning
 ============================
 The 7352 training and 10299 test observations were merged into a single data file along with 561 features as columns. 80 features inlcuding 'mean' and 'std' were then extracted. 
 The 6 activity labels are coded as their names and added to a new column in the final data set. 
-
+ 
 
 Description of the varialbes 
 ============================
