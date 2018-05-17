@@ -91,4 +91,4 @@ a$activityLabel <- factor(a$activityLabel, as.character(labelNameTable[[2]]))
 
 ## Save the tiny data set to "tinyAllData.txt" file
 write.table(tinyAllData, "tinyAllData.txt")
-
+ 

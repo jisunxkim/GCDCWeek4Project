@@ -1,5 +1,5 @@
 ===================================================================
-CodeBook of the data set in tinyAllData.txt
+CodeBook of the data set in tinyAllData.txt 
 ===================================================================
 
 The data set include total 80 columns and 20299 rows.
