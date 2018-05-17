@@ -1,13 +1,5 @@
-## Set Working Directory
-setwd("./Coursera-GetCleanData/W4Project/GCDCWeek4Project")
-
 ## Load packages
 library(dplyr)
-
-## set working directory for the data source
-dir_root <-"./UCI HAR Dataset"
-dir_test <-"./UCI HAR Dataset/test"
-dir_train <- "./UCI HAR Dataset/train"
 
 ## load data from files
 # 'features.txt': List of all features.
@@ -18,36 +10,36 @@ dir_train <- "./UCI HAR Dataset/train"
 # 'test/y_test.txt': Test labels.
 
 # load features data (561 observations, 2 variables)
-featureNameTable <- read.table(paste(dir_root, "features.txt", sep = "/"), stringsAsFactors = FALSE)
+featureNameTable <- read.table("features.txt", stringsAsFactors = FALSE)
 head(featureNameTable)
 tail(featureNameTable)
 nrow(featureNameTable)
 str(featureNameTable)
 
 # Load activity labels (6 observations, 2 variables)
-labelNameTable <- read.table(paste(dir_root, "activity_labels.txt", sep = "/"))
+labelNameTable <- read.table("activity_labels.txt")
 head(labelNameTable)
 str(labelNameTable)
 
 # Load training data set  (7352 observations, 561 variables)
-trainDataTable <- read.table(paste(dir_train,"X_train.txt", sep = "/")) 
+trainDataTable <- read.table("X_train.txt") 
 head(trainDataTable)
 str(trainDataTable)
 
 # Load training data labels (7352 observations, 1 variables)
-trainLabelTable <- read.table(paste(dir_train,"y_train.txt", sep = "/")) 
+trainLabelTable <- read.table("y_train.txt") 
 head(trainLabelTable)
 str(trainLabelTable)
 unique(trainLabelTable)
 
 # Load test data set (2947 observations, 561 variables)
-testDataTable <- read.table(paste(dir_test,"X_test.txt", sep = "/")) 
+testDataTable <- read.table("X_test.txt") 
 head(testDataTable)
 tail(testDataTable)
 str(testDataTable)
 
 # Load test data labels (2947 observations, 1 variable)
-testLabelTable <- read.table(paste(dir_test,"y_test.txt", sep = "/")) 
+testLabelTable <- read.table("y_test.txt") 
 head(testLabelTable)
 str(testLabelTable)
 unique(testLabelTable)
