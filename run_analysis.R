@@ -11,51 +11,37 @@ library(dplyr)
 
 # load features data (561 observations, 2 variables)
 featureNameTable <- read.table("features.txt", stringsAsFactors = FALSE)
-head(featureNameTable)
-tail(featureNameTable)
-nrow(featureNameTable)
-str(featureNameTable)
 
 # Load activity labels (6 observations, 2 variables)
 labelNameTable <- read.table("activity_labels.txt")
-head(labelNameTable)
-str(labelNameTable)
 
 # Load training data set  (7352 observations, 561 variables)
 trainDataTable <- read.table("X_train.txt") 
-head(trainDataTable)
-str(trainDataTable)
 
 # Load training data labels (7352 observations, 1 variables)
 trainLabelTable <- read.table("y_train.txt") 
-head(trainLabelTable)
-str(trainLabelTable)
-unique(trainLabelTable)
+
+# Load subjects of training data
+subjectTrainTable <- read.table("subject_train.txt")
 
 # Load test data set (2947 observations, 561 variables)
 testDataTable <- read.table("X_test.txt") 
-head(testDataTable)
-tail(testDataTable)
-str(testDataTable)
 
 # Load test data labels (2947 observations, 1 variable)
 testLabelTable <- read.table("y_test.txt") 
-head(testLabelTable)
-str(testLabelTable)
-unique(testLabelTable)
 
-## Add label data to the data
+# Load subjects of training data
+subjectTestTable <- read.table("subject_test.txt")
+
+
+## Add label and subject data to the data
 # Add the train label data to the train data
 trainDataTable$activityLabel <- trainLabelTable[[1]]
-str(trainDataTable,  list.len=ncol(trainDataTable))
-names(trainDataTable)
-
+trainDataTable$subject <- subjectTrainTable[[1]]
 
 # Add the test label data to the test data
 testDataTable$activityLabel <- testLabelTable[[1]]
-str(testDataTable,  list.len=ncol(testDataTable))
-names(testDataTable)
-
+testDataTable$subject <- subjectTestTable[[1]]
 
 ## Merge train and test data (10299 observations, 562 variables)
 allData <- rbind(testDataTable, trainDataTable)
@@ -68,21 +54,15 @@ names(allData)
  
 ## Select activtyLabel, mean, and standard deviation columns only
 # train Data
-tidyAllData <- select(allData, activityLabel, grep(".*mean.*|.*std.*", colnames(allData)))
-head(tidyAllData)
-names(tidyAllData)
-ncol(tidyAllData)
-str(tidyAllData)
+tidyAllData <- select(allData, activityLabel, subject, grep(".*mean.*|.*std.*", colnames(allData)))
 
 ## Assign levels of the factor variable "activityLabel"
 tidyAllData$activityLabel <- as.factor(tidyAllData$activityLabel)
 levels(tidyAllData$activityLabel) <- as.character(labelNameTable[[2]])
-str(tidyAllData)
-head(tidyAllData)
 
 ## clean column names
 colnames(tidyAllData) <- gsub("[.]", "", colnames(tidyAllData))
 colnames(tidyAllData) <- tolower(colnames(tidyAllData))
-names(tidyAllData)
+
 ## Save the tidy data set to "tidyAllData.txt" file
 write.table(tidyAllData, "tidyAllData.txt",  row.names = FALSE)
