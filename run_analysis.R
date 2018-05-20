@@ -68,19 +68,23 @@ names(allData)
  
 ## Select activtyLabel, mean, and standard deviation columns only
 # train Data
-tinyAllData <- select(allData, activityLabel, grep(".*mean.*|.*std.*", colnames(allData)))
-head(tinyAllData)
-names(tinyAllData)
-ncol(tinyAllData)
-str(tinyAllData)
+tidyAllData <- select(allData, activityLabel, grep(".*mean.*|.*std.*", colnames(allData)))
+head(tidyAllData)
+names(tidyAllData)
+ncol(tidyAllData)
+str(tidyAllData)
 
 ## Assign levels of the factor variable "activityLabel"
-tinyAllData$activityLabel <- as.factor(tinyAllData$activityLabel)
-levels(tinyAllData$activityLabel) <- as.character(labelNameTable[[2]])
-str(tinyAllData)
-head(tinyAllData)
+tidyAllData$activityLabel <- as.factor(tidyAllData$activityLabel)
+levels(tidyAllData$activityLabel) <- as.character(labelNameTable[[2]])
+str(tidyAllData)
+head(tidyAllData)
 a$activityLabel <- factor(a$activityLabel, as.character(labelNameTable[[2]]))
 
-## Save the tiny data set to "tinyAllData.txt" file
-write.table(tinyAllData, "tinyAllData.txt")
+## clean column names
+colnames(tidyAllData) <- gsub("[.]", "", colnames(tidyAllData))
+colnames(tidyAllData) <- tolower(colnames(tidyAllData))
+names(tidyAllData)
+## Save the tidy data set to "tidyAllData.txt" file
+write.table(tidyAllData, "tidyAllData.txt")
  
