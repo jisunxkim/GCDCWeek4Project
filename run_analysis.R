@@ -79,7 +79,6 @@ tidyAllData$activityLabel <- as.factor(tidyAllData$activityLabel)
 levels(tidyAllData$activityLabel) <- as.character(labelNameTable[[2]])
 str(tidyAllData)
 head(tidyAllData)
-a$activityLabel <- factor(a$activityLabel, as.character(labelNameTable[[2]]))
 
 ## clean column names
 colnames(tidyAllData) <- gsub("[.]", "", colnames(tidyAllData))
