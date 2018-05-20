@@ -85,5 +85,4 @@ colnames(tidyAllData) <- gsub("[.]", "", colnames(tidyAllData))
 colnames(tidyAllData) <- tolower(colnames(tidyAllData))
 names(tidyAllData)
 ## Save the tidy data set to "tidyAllData.txt" file
-write.table(tidyAllData, "tidyAllData.txt")
- 
+write.table(tidyAllData, "tidyAllData.txt",  row.names = FALSE)
