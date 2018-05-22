@@ -1,5 +1,12 @@
+# 1. Merges the training and the test sets to create one data set.
+# 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+# 3. Uses descriptive activity names to name the activities in the data set
+# 4. Appropriately labels the data set with descriptive variable names.
+# 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
 ## Load packages
 library(dplyr)
+library(reshape2)
 
 ## load data from files
 # 'features.txt': List of all features.
@@ -36,33 +43,37 @@ subjectTestTable <- read.table("subject_test.txt")
 
 ## Add label and subject data to the data
 # Add the train label data to the train data
-trainDataTable$activityLabel <- trainLabelTable[[1]]
+trainDataTable$activity <- trainLabelTable[[1]]
 trainDataTable$subject <- subjectTrainTable[[1]]
 
 # Add the test label data to the test data
-testDataTable$activityLabel <- testLabelTable[[1]]
+testDataTable$activity <- testLabelTable[[1]]
 testDataTable$subject <- subjectTestTable[[1]]
 
+# 1. Merges the training and the test sets to create one data set.
 ## Merge train and test data (10299 observations, 562 variables)
 allData <- rbind(testDataTable, trainDataTable)
-str(allData,  list.len=ncol(allData))
 
+
+# 3. Uses descriptive activity names to name the activities in the data set
 ## Change column names of the data tables with 561 feature names
 colnames(allData)[1:561] <- make.names(featureNameTable[[2]], unique=TRUE)
-names(allData)
 
- 
+# 2. Extracts only the measurements on the mean and standard deviation for each measurement.
 ## Select activtyLabel, mean, and standard deviation columns only
-# train Data
-tidyAllData <- select(allData, activityLabel, subject, grep(".*mean.*|.*std.*", colnames(allData)))
+tidyAllData <- select(allData, subject, activity, grep(".*mean.*|.*std.*", colnames(allData)))
 
-## Assign levels of the factor variable "activityLabel"
-tidyAllData$activityLabel <- as.factor(tidyAllData$activityLabel)
-levels(tidyAllData$activityLabel) <- as.character(labelNameTable[[2]])
+## Assign levels of the factor variable "activity"
+tidyAllData$activity <- as.factor(tidyAllData$activity)
+levels(tidyAllData$activity) <- as.character(labelNameTable[[2]])
 
+# 4. Appropriately labels the data set with descriptive variable names. 
 ## clean column names
 colnames(tidyAllData) <- gsub("[.]", "", colnames(tidyAllData))
 colnames(tidyAllData) <- tolower(colnames(tidyAllData))
 
+# 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+tidyData <- aggregate(.~subject+activity, data = tidyAllData, mean)
+
 ## Save the tidy data set to "tidyAllData.txt" file
-write.table(tidyAllData, "tidyAllData.txt",  row.names = FALSE)
+write.table(tidyData, "tidyData.txt",  row.names = FALSE, quote = FALSE)
